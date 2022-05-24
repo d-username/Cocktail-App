@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
+// import Ingredients from "./Ingredients";
 
 export default function SeeMore({ showInfo, setShowInfo }) {
   const [cocktail, setCocktail] = useState([]);
+  // const [showIngredient, setShowIngredient] = useState("");
 
   useEffect(() => {
     fetch(
@@ -9,7 +11,6 @@ export default function SeeMore({ showInfo, setShowInfo }) {
     )
       .then((res) => res.json())
       .then((data) => {
-        console.log("data ", data);
         setCocktail(data.drinks[0]);
       });
   }, []);
@@ -43,11 +44,16 @@ export default function SeeMore({ showInfo, setShowInfo }) {
         alt="coctail"
         src={cocktail.strDrinkThumb}
       />
-      <p>{cocktail.strInstructions}</p>
+      <p className="seemore--p">{cocktail.strInstructions}</p>
       <ul className="seemore--ingredients-container">
         {getIngredients().map((ingredient, index) => (
           <li key={index}>
-            <p className="seemore--ingredient">{ingredient}</p>
+            <button
+              className="seemore--ingredient"
+              // onClick={setShowIngredient(ingredient)}
+            >
+              {ingredient}
+            </button>
           </li>
         ))}
       </ul>

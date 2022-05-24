@@ -1,7 +1,21 @@
-export default function Aside({ setInputText, setSearchIngredients }) {
+import { useEffect, useState } from "react";
+
+export default function Aside({ setInputText, setCocktails }) {
+  const [searchByIngredients, setSearchByIngredients] = useState("");
+
+  useEffect(() => {
+    fetch(
+      `https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${searchByIngredients}`
+    )
+      .then((res) => res.json())
+      .then((data) => {
+        setCocktails(data.drinks);
+      });
+  }, [searchByIngredients]);
+
   return (
     <div className="aside">
-      <div>
+      <div className="aside--search-bar">
         <input
           type="search"
           id="search"
@@ -10,12 +24,46 @@ export default function Aside({ setInputText, setSearchIngredients }) {
           onChange={(e) => setInputText(e.target.value.toLowerCase())}
         ></input>
       </div>
-      <h3>Popular Ingredients</h3>
-      <ul>
-        <li onClick={() => setSearchIngredients("vodka")}>Vodka</li>
-        <li onClick={() => setSearchIngredients("gin")}>Gin</li>
-        <li onClick={() => setSearchIngredients("run")}>Rum</li>
-        <li onClick={() => setSearchIngredients("tequila")}>Tequila</li>
+      <h3 className="aside--h3">Popular Ingredients</h3>
+      <ul className="aside--grid">
+        <li className="aside--inline-two">
+          <img
+            className="aside--bottle-img zoom"
+            alt="vodka bottle"
+            src="https://www.thecocktaildb.com/images/ingredients/Vodka.png"
+            onClick={() => setSearchByIngredients("vodka")}
+          />
+          <p className="aside--p">Vodka</p>
+        </li>
+        <li className="aside--inline-two">
+          <img
+            className="aside--bottle-img zoom"
+            alt="vodka bottle"
+            src="https://www.thecocktaildb.com/images/ingredients/Gin.png"
+            onClick={() => setSearchByIngredients("gin")}
+          />
+          <p className="aside--p">Gin</p>
+        </li>
+
+        <li className="aside--inline-two">
+          <img
+            className="aside--bottle-img zoom"
+            alt="vodka bottle"
+            src="https://www.thecocktaildb.com/images/ingredients/Rum.png"
+            onClick={() => setSearchByIngredients("rum")}
+          />
+          <p className="aside--p">Rum</p>
+        </li>
+
+        <li className="aside--inline-two">
+          <img
+            className="aside--bottle-img zoom"
+            alt="vodka bottle"
+            src="https://www.thecocktaildb.com/images/ingredients/Tequila.png"
+            onClick={() => setSearchByIngredients("tequila")}
+          />
+          <p className="aside--p">Tequila</p>
+        </li>
       </ul>
     </div>
   );
