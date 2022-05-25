@@ -1,4 +1,13 @@
-export default function Main({ filteredCocktails, setShowInfo }) {
+export default function Main({
+  filteredCocktails,
+  setShowInfo,
+  setDisplayInfo,
+}) {
+  const handleDisplay = (drink) => {
+    setDisplayInfo(true);
+    setShowInfo(drink);
+  };
+
   return (
     <ul className="main">
       {filteredCocktails.map((cocktail, index) => (
@@ -11,7 +20,7 @@ export default function Main({ filteredCocktails, setShowInfo }) {
             />
             <p className="main--card-title">{cocktail.strDrink}</p>
             <button
-              onClick={() => setShowInfo(cocktail.idDrink)}
+              onClick={() => handleDisplay(cocktail.idDrink)}
               className="main--button-seemore"
             >
               SEE MORE

@@ -1,18 +1,4 @@
-import { useEffect, useState } from "react";
-
-export default function Aside({ setInputText, setCocktails }) {
-  const [searchByIngredients, setSearchByIngredients] = useState("");
-
-  useEffect(() => {
-    fetch(
-      `https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${searchByIngredients}`
-    )
-      .then((res) => res.json())
-      .then((data) => {
-        setCocktails(data.drinks);
-      });
-  }, [searchByIngredients]);
-
+export default function Aside({ setInputText, setSearchByIngredients }) {
   return (
     <div className="aside">
       <div className="aside--search-bar">

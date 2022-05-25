@@ -10,10 +10,22 @@ import { useEffect, useState } from "react";
 function App() {
   const [cocktails, setCocktails] = useState([]);
   const [showInfo, setShowInfo] = useState("");
+  const [displayInfo, setDisplayInfo] = useState(true);
   const [inputText, setInputText] = useState("");
   const [userIsOver18, setUserIsOver18] = useState(false);
   const [loginError, setLoginError] = useState(false);
   const [date, setDate] = useState();
+  const [searchByIngredients, setSearchByIngredients] = useState("");
+
+  useEffect(() => {
+    fetch(
+      `https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${searchByIngredients}`
+    )
+      .then((res) => res.json())
+      .then((data) => {
+        setCocktails(data.drinks);
+      });
+  }, [searchByIngredients]);
 
   useEffect(() => {
     fetch("https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=Cocktail")
@@ -40,14 +52,23 @@ function App() {
     <div className="app">
       {userIsOver18 ? (
         <MainWrapper>
-          <Aside setInputText={setInputText} setCocktails={setCocktails} />
+          <Aside
+            setInputText={setInputText}
+            setCocktails={setCocktails}
+            setSearchByIngredients={setSearchByIngredients}
+          />
           <Header />
-          {showInfo && (
-            <SeeMore showInfo={showInfo} setShowInfo={setShowInfo} />
+          {showInfo && displayInfo === true && (
+            <SeeMore
+              showInfo={showInfo}
+              setShowInfo={setShowInfo}
+              setSearchByIngredients={setSearchByIngredients}
+            />
           )}
           <Main
             filteredCocktails={filteredCocktails}
             setShowInfo={setShowInfo}
+            setDisplayInfo={setDisplayInfo}
           />
         </MainWrapper>
       ) : (

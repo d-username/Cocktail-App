@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
-// import Ingredients from "./Ingredients";
 
-export default function SeeMore({ showInfo, setShowInfo }) {
+export default function SeeMore({
+  showInfo,
+  setShowInfo,
+  setSearchByIngredients,
+}) {
   const [cocktail, setCocktail] = useState([]);
-  // const [showIngredient, setShowIngredient] = useState("");
 
   useEffect(() => {
     fetch(
@@ -14,8 +16,6 @@ export default function SeeMore({ showInfo, setShowInfo }) {
         setCocktail(data.drinks[0]);
       });
   }, []);
-
-  console.log("cocktail: ", cocktail);
 
   function getIngredients() {
     let ingredients = [];
@@ -32,7 +32,6 @@ export default function SeeMore({ showInfo, setShowInfo }) {
         ingredients.push(value);
       }
     }
-    console.log("INGREDIENTS: ", ingredients);
     return ingredients;
   }
 
@@ -49,8 +48,8 @@ export default function SeeMore({ showInfo, setShowInfo }) {
         {getIngredients().map((ingredient, index) => (
           <li key={index}>
             <button
-              className="seemore--ingredient"
-              // onClick={setShowIngredient(ingredient)}
+              className="seemore--ingredient zoom--slow"
+              onClick={() => setSearchByIngredients(ingredient)}
             >
               {ingredient}
             </button>
