@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react';
 
 export default function SeeMore({
   showInfo,
@@ -15,19 +15,19 @@ export default function SeeMore({
       .then((data) => {
         setCocktail(data.drinks[0]);
       });
-  }, []);
+  });
 
   function getIngredients() {
     let ingredients = [];
     const keys = Object.keys(cocktail);
     const keysOfIngredints = keys.filter((key) =>
-      key.includes("strIngredient")
+      key.includes('strIngredient')
     );
     for (const [key, value] of Object.entries(cocktail)) {
       if (
         keysOfIngredints.includes(key) === true &&
         value !== null &&
-        value !== ""
+        value !== ''
       ) {
         ingredients.push(value);
       }
@@ -36,19 +36,19 @@ export default function SeeMore({
   }
 
   return (
-    <div className={showInfo === "" ? "seemore--hidden" : "seemore--panel"}>
+    <div className={showInfo === '' ? 'seemore--hidden' : 'seemore--panel'}>
       <h1>{cocktail.strDrink}</h1>
       <img
-        className="seemore--image"
-        alt="coctail"
+        className='seemore--image'
+        alt='coctail'
         src={cocktail.strDrinkThumb}
       />
-      <p className="seemore--p">{cocktail.strInstructions}</p>
-      <ul className="seemore--ingredients-container">
+      <p className='seemore--p'>{cocktail.strInstructions}</p>
+      <ul className='seemore--ingredients-container'>
         {getIngredients().map((ingredient, index) => (
           <li key={index}>
             <button
-              className="seemore--ingredient zoom--slow"
+              className='seemore--ingredient zoom--slow'
               onClick={() => setSearchByIngredients(ingredient)}
             >
               {ingredient}
@@ -56,7 +56,7 @@ export default function SeeMore({
           </li>
         ))}
       </ul>
-      <button onClick={() => setShowInfo("")}>BACK</button>
+      <button onClick={() => setShowInfo('')}>BACK</button>
     </div>
   );
 }
